@@ -10,15 +10,13 @@
         :root {
             --primary: #000000;
             --secondary: #ffffff;
-            --accent: #7C3AED;  /* Changed to a vibrant purple */
-            --accent-gradient: linear-gradient(45deg, #7C3AED, #2563EB);
-            --grid-color: rgba(124, 58, 237, 0.1);
-            --background: #0F172A;  /* Darker background */
-            --card-bg: rgba(30, 41, 59, 0.7);  /* More transparent cards */
-            --text: #ffffff;
-            --text-light: #94A3B8;
-            --border-radius: 16px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --accent: #007AFF;
+            --grid-color: rgba(255, 255, 255, 0.1);
+            --background: #0a0a0a;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text: #1a1a1a;
+            --text-light: #ffffff;
+            --border-radius: 12px;
         }
 
         body {
@@ -113,8 +111,8 @@
         }
 
         .navbar {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
             padding: 1rem 2rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -218,13 +216,19 @@
         }
 
         .hero h1 {
-            background: var(--accent-gradient);
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(45deg, #fff, #007AFF);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
-            font-size: 4.5rem;
-            letter-spacing: -0.02em;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 20px rgba(0, 122, 255, 0); }
+            to { text-shadow: 0 0 20px rgba(0, 122, 255, 0.5); }
         }
 
         .hero p {
@@ -234,12 +238,11 @@
         }
 
         .generator-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: rgba(30, 30, 30, 0.9); /* Darker background */
             border-radius: var(--border-radius);
             padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Darker shadow */
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -262,51 +265,30 @@
         }
 
         .form-control {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            transition: var(--transition);
+            border: 2px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             padding: 1rem;
             font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.08);
             border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
             transform: translateY(-2px);
         }
 
         .btn-generate {
-            background: var(--accent-gradient);
+            background: linear-gradient(45deg, #007AFF, #4433ff);
+            color: white;
             border: none;
             padding: 1rem 2rem;
+            border-radius: 12px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            z-index: 1;
-            color: white;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-generate::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #2563EB, #7C3AED);
-            z-index: -1;
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .btn-generate:hover::before {
-            opacity: 1;
         }
 
         .btn-generate:hover {
@@ -342,7 +324,6 @@
         .spinner-border {
             width: 3rem;
             height: 3rem;
-            color: var(--accent);
         }
 
         #result-image {
@@ -384,7 +365,6 @@
             }
 
             .generator-card {
-                margin: 1rem;
                 padding: 1.5rem;
             }
 
@@ -399,20 +379,8 @@
             margin-top: 2rem;
             border-radius: var(--border-radius);
             overflow: hidden;
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 30, 30, 0.9);
             padding: 1rem;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideUp 0.5s ease forwards;
-        }
-
-        @keyframes slideUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
 
         .image-wrapper {
@@ -425,7 +393,7 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background: var(--accent-gradient);
+            background: rgba(0, 0, 0, 0.7);
             border: none;
             border-radius: 50%;
             width: 40px;
@@ -434,15 +402,13 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             opacity: 0;
             z-index: 10;
-            transform: translateY(10px);
         }
 
         .image-wrapper:hover .download-btn {
             opacity: 1;
-            transform: translateY(0);
         }
 
         .download-btn:hover {
@@ -461,16 +427,6 @@
             height: auto;
             border-radius: var(--border-radius);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .progress {
-            background: rgba(255, 255, 255, 0.1);
-            height: 6px;
-            border-radius: 3px;
-        }
-
-        .progress-bar {
-            background: var(--accent-gradient);
         }
     </style>
 </head>
