@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from together import Together
-from huggingface_hub import login
+from huggingface_hub import login, InferenceClient
 import logging
 import os
 import base64
@@ -77,11 +77,14 @@ try:
 except Exception as e:
     logger.error(f"Failed to login to Hugging Face: {str(e)}")
 
+# Initialize clients
 app = Flask(__name__)
-# Initialize Together client
 client = Together()
+hf_client = InferenceClient(provider="hf-inference", api_key=HF_TOKEN)
 
+# Update API URLs and add new model
 API_URL = "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev"
+SD_MODEL = "stabilityai/stable-diffusion-3.5-large-turbo"
 headers = {"Authorization": f"Bearer {os.environ['HUGGINGFACE_TOKEN']}"}
 
 @retry_with_backoff(retries=3)
@@ -124,6 +127,34 @@ def generate_with_together(prompt, model):
         logger.error(f"Together AI generation error: {str(e)}")
         raise
 
+@retry_with_backoff(retries=3)
+def generate_with_sd(prompt):
+    """Generate image using Stable Diffusion 3.5"""
+    logger.info("Generating image with Stable Diffusion 3.5")
+    try:
+        # Generate image
+        image = hf_client.text_to_image(
+            prompt,
+            model=SD_MODEL
+        )
+        
+        # Convert PIL Image to bytes
+        img_byte_arr = BytesIO()
+        image.save(img_byte_arr, format='PNG')
+        image_bytes = img_byte_arr.getvalue()
+        
+        # Save image locally
+        save_image_locally(image_bytes, prompt, "stable-diffusion")
+        
+        # Convert to base64
+        image_base64 = base64.b64encode(image_bytes).decode('utf-8')
+        logger.info("Successfully generated image with Stable Diffusion 3.5")
+        return image_base64
+        
+    except Exception as e:
+        logger.error(f"Stable Diffusion generation error: {str(e)}")
+        raise
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -155,6 +186,10 @@ def generate_image():
         try:
             if model == "black-forest-labs/FLUX.1-dev":
                 image_data = generate_with_huggingface(prompt)
+            elif model == SD_MODEL:
+                # Use Stable Diffusion 3.5
+                logger.debug("Making API request to Stable Diffusion")
+                image_data = generate_with_sd(prompt)
             else:
                 image_data = generate_with_together(prompt, model)
                 
