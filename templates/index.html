@@ -10,13 +10,15 @@
         :root {
             --primary: #000000;
             --secondary: #ffffff;
-            --accent: #007AFF;
-            --grid-color: rgba(255, 255, 255, 0.1);
-            --background: #0a0a0a;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text: #1a1a1a;
-            --text-light: #ffffff;
-            --border-radius: 12px;
+            --accent: #7C3AED;  /* Changed to a vibrant purple */
+            --accent-gradient: linear-gradient(45deg, #7C3AED, #2563EB);
+            --grid-color: rgba(124, 58, 237, 0.1);
+            --background: #0F172A;  /* Darker background */
+            --card-bg: rgba(30, 41, 59, 0.7);  /* More transparent cards */
+            --text: #ffffff;
+            --text-light: #94A3B8;
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
@@ -111,8 +113,8 @@
         }
 
         .navbar {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
             padding: 1rem 2rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -216,19 +218,13 @@
         }
 
         .hero h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            background: linear-gradient(45deg, #fff, #007AFF);
+            background: var(--accent-gradient);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: titleGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes titleGlow {
-            from { text-shadow: 0 0 20px rgba(0, 122, 255, 0); }
-            to { text-shadow: 0 0 20px rgba(0, 122, 255, 0.5); }
+            text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+            font-size: 4.5rem;
+            letter-spacing: -0.02em;
         }
 
         .hero p {
@@ -238,11 +234,12 @@
         }
 
         .generator-card {
-            background: rgba(30, 30, 30, 0.9); /* Darker background */
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border-radius: var(--border-radius);
             padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Darker shadow */
-            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -265,30 +262,51 @@
         }
 
         .form-control {
-            border: 2px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            transition: var(--transition);
             border-radius: 12px;
             padding: 1rem;
             font-size: 1.1rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
         }
 
         .form-control:focus {
+            background: rgba(255, 255, 255, 0.08);
             border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
             transform: translateY(-2px);
         }
 
         .btn-generate {
-            background: linear-gradient(45deg, #007AFF, #4433ff);
-            color: white;
+            background: var(--accent-gradient);
             border: none;
             padding: 1rem 2rem;
-            border-radius: 12px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
+            z-index: 1;
+            color: white;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-generate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #2563EB, #7C3AED);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .btn-generate:hover::before {
+            opacity: 1;
         }
 
         .btn-generate:hover {
@@ -324,6 +342,7 @@
         .spinner-border {
             width: 3rem;
             height: 3rem;
+            color: var(--accent);
         }
 
         #result-image {
@@ -365,12 +384,93 @@
             }
 
             .generator-card {
+                margin: 1rem;
                 padding: 1.5rem;
             }
 
             .grid {
                 background-size: 30px 30px;
             }
+        }
+
+        /* New styles for image result container */
+        .result-container {
+            position: relative;
+            margin-top: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+        }
+
+        .download-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            z-index: 10;
+            transform: translateY(10px);
+        }
+
+        .image-wrapper:hover .download-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .download-btn:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .download-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        #result-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress {
+            background: rgba(255, 255, 255, 0.1);
+            height: 6px;
+            border-radius: 3px;
+        }
+
+        .progress-bar {
+            background: var(--accent-gradient);
         }
     </style>
 </head>
@@ -457,7 +557,16 @@
             </div>
             
             <div id="result" class="mt-4 text-center">
-                <img id="result-image" alt="Generated image" style="display: none;">
+                <div class="result-container" style="display: none;">
+                    <div class="image-wrapper">
+                        <button class="download-btn" title="Download Image">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M12 16l-4-4h3V4h2v8h3l-4 4zm9-13h-6v2h6v16H3V5h6V3H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                            </svg>
+                        </button>
+                        <img id="result-image" alt="Generated image">
+                    </div>
+                </div>
             </div>
             <div id="error-message" class="alert alert-danger mt-3" style="display: none;" role="alert"></div>
         </div>
@@ -541,7 +650,7 @@
                             resultImage.src = `data:image/png;base64,${data.image}`;
                         };
                         resultImage.src = `data:image/jpeg;base64,${data.image}`;
-                        resultImage.style.display = 'block';
+                        document.querySelector('.result-container').style.display = 'block';
                         setTimeout(() => {
                             resultImage.classList.add('show');
                         }, 100);
@@ -589,6 +698,27 @@
                 loadingMsg.textContent = "Creating your masterpiece with high quality settings...";
             } else {
                 loadingMsg.textContent = "Creating your masterpiece...";
+            }
+        });
+
+        // Add download functionality
+        document.querySelector('.download-btn').addEventListener('click', async () => {
+            const image = document.getElementById('result-image');
+            if (image.src) {
+                try {
+                    const response = await fetch(image.src);
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `generated-image-${Date.now()}.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                } catch (error) {
+                    console.error('Error downloading image:', error);
+                }
             }
         });
     </script>
