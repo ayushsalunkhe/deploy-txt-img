@@ -372,62 +372,6 @@
                 background-size: 30px 30px;
             }
         }
-
-        /* New styles for image result container */
-        .result-container {
-            position: relative;
-            margin-top: 2rem;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            background: rgba(30, 30, 30, 0.9);
-            padding: 1rem;
-        }
-
-        .image-wrapper {
-            position: relative;
-            display: inline-block;
-            max-width: 100%;
-        }
-
-        .download-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(0, 0, 0, 0.7);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            opacity: 0;
-            z-index: 10;
-        }
-
-        .image-wrapper:hover .download-btn {
-            opacity: 1;
-        }
-
-        .download-btn:hover {
-            background: var(--accent);
-            transform: scale(1.1);
-        }
-
-        .download-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-
-        #result-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-        }
     </style>
 </head>
 <body>
@@ -513,16 +457,7 @@
             </div>
             
             <div id="result" class="mt-4 text-center">
-                <div class="result-container" style="display: none;">
-                    <div class="image-wrapper">
-                        <button class="download-btn" title="Download Image">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 16l-4-4h3V4h2v8h3l-4 4zm9-13h-6v2h6v16H3V5h6V3H3c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-                            </svg>
-                        </button>
-                        <img id="result-image" alt="Generated image">
-                    </div>
-                </div>
+                <img id="result-image" alt="Generated image" style="display: none;">
             </div>
             <div id="error-message" class="alert alert-danger mt-3" style="display: none;" role="alert"></div>
         </div>
@@ -606,7 +541,7 @@
                             resultImage.src = `data:image/png;base64,${data.image}`;
                         };
                         resultImage.src = `data:image/jpeg;base64,${data.image}`;
-                        document.querySelector('.result-container').style.display = 'block';
+                        resultImage.style.display = 'block';
                         setTimeout(() => {
                             resultImage.classList.add('show');
                         }, 100);
@@ -654,27 +589,6 @@
                 loadingMsg.textContent = "Creating your masterpiece with high quality settings...";
             } else {
                 loadingMsg.textContent = "Creating your masterpiece...";
-            }
-        });
-
-        // Add download functionality
-        document.querySelector('.download-btn').addEventListener('click', async () => {
-            const image = document.getElementById('result-image');
-            if (image.src) {
-                try {
-                    const response = await fetch(image.src);
-                    const blob = await response.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `generated-image-${Date.now()}.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(a);
-                } catch (error) {
-                    console.error('Error downloading image:', error);
-                }
             }
         });
     </script>
