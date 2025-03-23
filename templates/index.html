@@ -669,6 +669,12 @@
                     body: formData
                 });
 
+                // Check for HTML error responses
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('text/html')) {
+                    throw new Error('Server error: The API may be experiencing issues. Please try again later.');
+                }
+
                 const data = await response.json();
                 
                 if (data.success) {
@@ -680,7 +686,11 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Failed to enhance prompt: ' + error.message);
+                if (error.message.includes('Unexpected token')) {
+                    alert('Server error: The AI enhancement service is currently unavailable. Please try again later.');
+                } else {
+                    alert('Failed to enhance prompt: ' + error.message);
+                }
             } finally {
                 // Reset button state
                 enhanceBtn.disabled = false;
