@@ -94,9 +94,9 @@ def retry_with_backoff(retries=3, backoff_in_seconds=1):
 translator = Translator(to_lang="en")
 
 # Configure Gemini API
-#GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-#genai.configure(api_key=GEMINI_API_KEY)
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyCE1jtt0YLHgr_mNB_mEbfvYaQlyKKaXZk")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=GEMINI_API_KEY)
+#GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyCE1jtt0YLHgr_mNB_mEbfvYaQlyKKaXZk")
 
 @retry_with_backoff(retries=3, backoff_in_seconds=1)
 def detect_language_with_gemini(text):
