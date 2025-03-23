@@ -173,15 +173,15 @@ def translate_text(text, target_lang='en'):
         source_lang = langdetect.detect(text)
         
         # If text is already in English, return as is
-            if source_lang == target_lang:
+        if source_lang == target_lang:
             return text, source_lang
             
-            # Translate using translate package
-            translation = translator.translate(text)
-            return translation, source_lang
+        # Translate using translate package
+        translation = translator.translate(text)
+        return translation, source_lang
     except Exception as e:
         logger.error(f"Translation error: {str(e)}")
-            return text, 'unknown'  # Return original text if translation fails
+        return text, 'unknown'  # Return original text if translation fails
 
 @app.route('/detect-language', methods=['POST'])
 def detect_language():
@@ -593,12 +593,9 @@ def generate_image():
         logger.error(f"Unexpected error: {str(e)}", exc_info=True)
         return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
-# if __name__ == '__main__':
-#     # Set your ngrok auth token
-#     ngrok.set_auth_token("2kF0h1FF3cshznbJqIAa7uaBpUd_5ouG3nr6T6Br8NYF9kuV")
-#     public_url = ngrok.connect(5000).public_url
-#     logger.info(f"Public URL: {public_url}")
-#     app.run()
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    # Set your ngrok auth token
+    ngrok.set_auth_token("2kF0h1FF3cshznbJqIAa7uaBpUd_5ouG3nr6T6Br8NYF9kuV")
+    public_url = ngrok.connect(5000).public_url
+    logger.info(f"Public URL: {public_url}")
+    app.run()
