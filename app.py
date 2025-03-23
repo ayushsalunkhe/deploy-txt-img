@@ -594,8 +594,5 @@ def generate_image():
         return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 if __name__ == '__main__':
-    # Set your ngrok auth token
-    ngrok.set_auth_token("2kF0h1FF3cshznbJqIAa7uaBpUd_5ouG3nr6T6Br8NYF9kuV")
-    public_url = ngrok.connect(5000).public_url
-    logger.info(f"Public URL: {public_url}")
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
