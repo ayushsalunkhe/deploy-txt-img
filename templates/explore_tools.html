@@ -347,17 +347,18 @@
     <div class="row g-4">
         <!-- Tool Card 1 -->
         <div class="col-md-4">
+            <!-- Commented out upscale image enhancer tool card
             <div class="tool-card">
-                <!-- Dynamically load image from Flask static folder -->
                 <img src="{{ url_for('static', filename='images/image_enhancer.png') }}" alt="Image Enhancer AI" class="tool-image">
                 <div class="tool-content">
                     <div>
                         <h2 class="tool-title">Image Enhancer AI</h2>
                         <p class="tool-description">Enhance the quality to 4k using this tool.</p>
                     </div>
-                    <a href="#" class="demo-btn">Try this</a>
+                    <a href="{{ url_for('upscale') }}" class="demo-btn">Try this</a>
                 </div>
             </div>
+            -->
         </div>
 
         <!-- Tool Card 2 -->
