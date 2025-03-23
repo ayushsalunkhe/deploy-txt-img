@@ -35,6 +35,19 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Check API keys and log warnings
+def check_api_keys():
+    if not os.getenv("GEMINI_API_KEY"):
+        logger.warning("GEMINI_API_KEY is not set. Gemini features will not work properly.")
+    
+    if not os.getenv("TOGETHER_API_KEY") and not os.getenv("HUGGINGFACE_TOKEN"):
+        logger.warning("Neither TOGETHER_API_KEY nor HUGGINGFACE_TOKEN is set. Image generation may not work properly.")
+    
+    return True
+
+# Run check on startup
+check_api_keys()
+
 # Create output directory if it doesn't exist
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'output')
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -263,6 +276,11 @@ headers = {"Authorization": f"Bearer {os.environ['HUGGINGFACE_TOKEN']}"}
 def sync_enhance_prompt_with_gemini(prompt, preserve_language=True):
     """Enhance the user's prompt using Gemini 2.0 Flash with multilingual support"""
     try:
+        # Check if API key is available
+        if not GEMINI_API_KEY:
+            logger.warning("No Gemini API key available for prompt enhancement")
+            return prompt  # Return original prompt without enhancement
+            
         # First detect the original language
         original_lang = detect_language_with_gemini(prompt)
         
@@ -323,7 +341,21 @@ def sync_enhance_prompt_with_gemini(prompt, preserve_language=True):
         return enhanced_prompt
     except Exception as e:
         logger.error(f"Error enhancing prompt with Gemini: {str(e)}")
-        return prompt  # Fallback to original prompt if enhancement fails
+        # Add a basic enhancement if Gemini fails
+        try:
+            # Simple enhancement by adding some common image quality descriptors
+            quality_terms = ["high resolution", "detailed", "sharp focus", "professional lighting"]
+            style_terms = ["vibrant colors", "photorealistic", "beautiful composition"]
+            
+            # Pick a few terms to add
+            import random
+            selected_terms = random.sample(quality_terms, 2) + random.sample(style_terms, 1)
+            
+            # Add terms to the original prompt
+            enhanced = prompt + ", " + ", ".join(selected_terms)
+            return enhanced
+        except:
+            return prompt  # Return original prompt if enhancement fails
 
 @retry_with_backoff(retries=3, backoff_in_seconds=1)
 def generate_with_huggingface(prompt):
@@ -510,24 +542,32 @@ def explore_tools():
 @app.route('/enhance-prompt', methods=['POST'])
 def enhance_prompt():
     try:
+        # Check if Gemini API key is properly set
+        if not GEMINI_API_KEY:
+            return jsonify({'success': False, 'error': 'Gemini API key is not set'}), 500
+            
         prompt = request.form.get('prompt')
         preserve_language = request.form.get('preserve_language', 'true').lower() == 'true'
         
         if not prompt:
             return jsonify({'success': False, 'error': 'No prompt provided'}), 400
+        
+        try:    
+            enhanced_prompt = sync_enhance_prompt_with_gemini(prompt, preserve_language)
             
-        enhanced_prompt = sync_enhance_prompt_with_gemini(prompt, preserve_language)
-        
-        # Detect languages for response
-        original_lang = detect_language_with_gemini(prompt)
-        enhanced_lang = detect_language_with_gemini(enhanced_prompt)
-        
-        return jsonify({
-            'success': True, 
-            'enhanced_prompt': enhanced_prompt,
-            'original_language': original_lang,
-            'enhanced_language': enhanced_lang
-        })
+            # Detect languages for response
+            original_lang = detect_language_with_gemini(prompt)
+            enhanced_lang = detect_language_with_gemini(enhanced_prompt)
+            
+            return jsonify({
+                'success': True, 
+                'enhanced_prompt': enhanced_prompt,
+                'original_language': original_lang,
+                'enhanced_language': enhanced_lang
+            })
+        except Exception as e:
+            logger.error(f"Error enhancing prompt: {str(e)}")
+            return jsonify({'success': False, 'error': f'Error enhancing prompt: {str(e)}'}), 500
     except Exception as e:
         logger.error(f"Error in enhance_prompt endpoint: {str(e)}")
         return jsonify({'success': False, 'error': str(e)}), 500
