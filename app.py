@@ -195,7 +195,7 @@ def detect_language():
         try:
             language = detect_language_with_gemini(text)
         except Exception:
-        language = langdetect.detect(text)
+            language = langdetect.detect(text)
             
         # Get language name
         try:
