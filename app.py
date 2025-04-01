@@ -115,7 +115,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 def detect_language_with_gemini(text):
     """Detect language using Gemini API"""
     try:
-        model = genai.GenerativeModel('gemini-2.0-flash-thinking-exp-01-21')
+        model = genai.GenerativeModel('Gemini 2.0 Flash')
         prompt = f"""
         Detect the language of the following text. 
         Return only the ISO 639-1 language code (e.g., 'en' for English, 'es' for Spanish, etc.).
@@ -151,7 +151,7 @@ def translate_with_gemini(text, target_lang='en'):
         if source_lang == target_lang:
             return text, source_lang
             
-        model = genai.GenerativeModel('gemini-2.0-flash-thinking-exp-01-21')
+        model = genai.GenerativeModel('Gemini 2.0 Flash')
         prompt = f"""
         Translate the following text from {source_lang} to {target_lang}.
         Return only the translated text without any additional explanations.
@@ -291,7 +291,7 @@ def sync_enhance_prompt_with_gemini(prompt, preserve_language=True):
             translated_prompt = prompt
         
         # Configure the model
-        model = genai.GenerativeModel('gemini-2.0-flash-thinking-exp-01-21')
+        model = genai.GenerativeModel('Gemini 2.0 Flash')
         
         # Create a structured prompt for Gemini using more neutral language
         gemini_prompt = f"""
@@ -443,7 +443,7 @@ def generate_with_gemini(prompt):
     logger.info("Generating image with Gemini")
     try:
         # Configure the model - use gemini-1.5-pro for image generation
-        model = genai.GenerativeModel('gemini-2.0-flash-thinking-exp-01-21')
+        model = genai.GenerativeModel('Gemini 2.0 Flash')
         
         # Generate image
         response = model.generate_content(
