@@ -5,153 +5,282 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn about our team at SNAP AI">
     <title>About Us - SNAP AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght  crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Include all the styles from the original index.html */
+        @font-face {
+            font-family: 'Gotham';
+            src: url('https://db.onlinewebfonts.com/t/0744a43ed7aae0208e2909e224f32268.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Gotham';
+            src: url('https://db.onlinewebfonts.com/t/3a47f5f06b7994539da89a92e89d9da2.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Gotham';
+            src: url('https://db.onlinewebfonts.com/t/9a4f7277d0e3e3304ad3b8b3c64f5b61.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Gotham';
+            src: url('https://db.onlinewebfonts.com/t/a9db6cd9116ff56da3875b35444f0ec5.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
-            --primary: #000000;
+            /* Core colors */
+            --primary: #0066FF;
+            --primary-glow: rgba(0, 102, 255, 0.25);
+            --primary-dark: #0055d4;
+            --accent: #00F0FF;
+            --accent-glow: rgba(0, 240, 255, 0.25);
             --secondary: #ffffff;
-            --accent: #007AFF;
-            --grid-color: rgba(255, 255, 255, 0.1);
-            --background: #0a0a0a;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text: #1a1a1a;
-            --text-light: #ffffff;
-            --border-radius: 12px;
+            
+            /* Background colors */
+            --background: #0A0E17;
+            --surface-1: rgba(17, 24, 39, 0.5);
+            --surface-2: rgba(31, 41, 55, 0.5);
+            --surface-3: rgba(55, 65, 81, 0.5);
+            
+            /* Text colors */
+            --text: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-tertiary: rgba(255, 255, 255, 0.6);
+            
+            /* UI elements */
+            --border-radius-sm: 12px;
+            --border-radius-md: 20px;
+            --border-radius-lg: 28px;
+            --border-radius-xl: 36px;
+            --card-shadow: 0 20px 70px rgba(0, 0, 0, 0.4);
+            --glass-bg: rgba(17, 24, 39, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --glow-shadow: 0 0 30px var(--primary-glow);
+            
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 8rem;
+            
+            /* Transitions */
+            --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-normal: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .light {
+            --background: #f8f9fc;
+            --surface-1: #ffffff;
+            --surface-2: #f1f5f9;
+            --surface-3: #e2e8f0;
+            --text: #0A0E17;
+            --text-secondary: rgba(10, 14, 23, 0.7);
+            --text-tertiary: rgba(10, 14, 23, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            --card-shadow: 0 20px 70px rgba(0, 0, 0, 0.07);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             background-color: var(--background);
-            color: var(--text-light);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text);
+            font-family: 'Gotham', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            transition: all var(--transition-normal);
+            line-height: 1.5;
+            font-weight: 400;
         }
 
-        /* 3D Background Animation */
+        /* Futuristic background */
         .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            perspective: 1000px;
             z-index: -1;
             overflow: hidden;
         }
 
-        .grid {
+        .gradient-bg {
             position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            transform-style: preserve-3d;
-            animation: rotate 60s linear infinite;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 15% 50%, var(--primary-glow), transparent 35%),
+                radial-gradient(circle at 85% 30%, var(--accent-glow), transparent 35%);
+            opacity: 0.6;
         }
 
-        .grid::before,
-        .grid::after {
-            content: '';
+        .grid-overlay {
             position: absolute;
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: rotateX(45deg);
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center center;
         }
 
-        .grid::after {
-            transform: rotateX(45deg) rotateY(180deg);
+        .light .grid-overlay {
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
         }
 
-        @keyframes rotate {
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .light .particle {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes float-nav {
+            0%, 100% {
+                transform: translateZ(0);
+            }
+            50% {
+                transform: translateZ(10px);
+            }
+        }
+
+        @keyframes float-card {
+            0%, 100% {
+                transform: translateZ(0) translateY(0);
+            }
+            50% {
+                transform: translateZ(20px) translateY(-10px);
+            }
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes float {
             0% {
-                transform: rotateZ(0deg);
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
             }
             100% {
-                transform: rotateZ(360deg);
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
             }
         }
 
-        /* Glowing Orbs */
-        .orb {
-            position: fixed;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .orb-1 {
-            background: #ff3366;
-            top: -100px;
-            left: -100px;
-            animation: float1 15s ease-in-out infinite;
-        }
-
-        .orb-2 {
-            background: #4433ff;
-            bottom: -100px;
-            right: -100px;
-            animation: float2 20s ease-in-out infinite;
-        }
-
-        @keyframes float1 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(100px, 100px); }
-        }
-
-        @keyframes float2 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-100px, -100px); }
-        }
-
+        /* Navbar */
         .navbar {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-sm);
+            margin: 1rem;
+            padding: 1.25rem 2rem;
+            transition: all var(--transition-normal);
+            position: fixed;
+            width: calc(100% - 2rem);
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--glass-shadow);
+            transform: translateZ(0);
+            animation: float-nav 8s ease-in-out infinite;
         }
 
         .navbar-brand {
             font-weight: 700;
             font-size: 1.5rem;
-            color: var(--text-light);
+            color: var(--text);
+            letter-spacing: -0.5px;
+            text-decoration: none;
             position: relative;
-            overflow: hidden;
-            transition: color 0.3s ease;
+            display: inline-block;
         }
 
         .navbar-brand::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            transform: translateX(-100%);
-            animation: shimmer 3s infinite;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-fast);
         }
 
-        .navbar-brand:hover {
-            color: var(--accent);
+        .navbar-brand:hover::after {
+            transform: scaleX(1);
         }
 
-        @keyframes shimmer {
-            100% { transform: translateX(100%); }
+        .navbar-nav {
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .nav-link {
-            color: var(--text-light);
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            font-weight: 400;
+            padding: 0.5rem 1.5rem;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: -0.2px;
             position: relative;
         }
 
@@ -160,60 +289,131 @@
             position: absolute;
             bottom: 0;
             left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover::before {
-            width: 80%;
-            left: 10%;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            transform: translateX(-50%) scale(0);
+            transition: transform var(--transition-fast);
         }
 
         .nav-link:hover {
-            color: var(--accent);
-            transform: translateY(-2px);
+            color: var(--text);
         }
 
+        .nav-link:hover::before {
+            transform: translateX(-50%) scale(1);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-glow);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform var(--transition-fast);
+        }
+
+        .theme-toggle:hover::before {
+            transform: scale(1);
+        }
+
+        .theme-toggle svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero section */
         .hero {
-            padding: 8rem 0 4rem;
+            padding: var(--spacing-xl) 0 var(--spacing-lg);
             text-align: center;
             position: relative;
+            margin-top: 4rem;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 5rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            background: linear-gradient(45deg, #fff, #007AFF);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, var(--text), var(--primary), var(--accent));
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: titleGlow 2s ease-in-out infinite alternate;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            animation: gradient-shift 8s ease-in-out infinite;
         }
 
-        @keyframes titleGlow {
-            from { text-shadow: 0 0 20px rgba(0, 122, 255, 0); }
-            to { text-shadow: 0 0 20px rgba(0, 122, 255, 0.5); }
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
         }
 
         .hero p {
             font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-lg);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            letter-spacing: -0.3px;
+        }
+
+        /* Team section */
+        .team-section {
+            padding: 0 var(--spacing-md) var(--spacing-xl);
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .team-card {
-            background: rgba(30, 30, 30, 0.9);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--card-shadow);
+            transition: all var(--transition-normal);
             position: relative;
             overflow: hidden;
-            margin-bottom: 2rem;
+            text-align: center;
+            margin-bottom: var(--spacing-md);
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .team-card::before {
@@ -221,15 +421,14 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #007AFF, #ff3366, #4433ff);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
 
-        .team-card:hover::before {
-            transform: scaleX(1);
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
         }
 
         .team-member-img {
@@ -237,11 +436,52 @@
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--accent);
-            margin-bottom: 1rem;
+            border: 3px solid var(--primary);
+            margin-bottom: var(--spacing-sm);
+            box-shadow: 0 0 20px var(--primary-glow);
+            transition: all var(--transition-normal);
+        }
+
+        .team-card:hover .team-member-img {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        .team-member-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--text), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .team-member-role {
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+            font-size: 1rem;
+        }
+
+        .team-member-bio {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
         }
 
         @media (max-width: 768px) {
+            :root {
+                --spacing-lg: 2.5rem;
+                --spacing-xl: 5rem;
+            }
+            
             .navbar {
                 padding: 1rem;
             }
@@ -251,92 +491,232 @@
             }
 
             .team-card {
-                padding: 1.5rem;
+                padding: var(--spacing-md);
             }
+        }
 
-            .grid {
-                background-size: 30px 30px;
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
             }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            animation: fadeIn 1s var(--transition-normal) forwards;
+        }
+
+        .hero p {
+            animation: fadeIn 1s var(--transition-normal) 0.2s both;
+        }
+
+        .team-card {
+            animation: floatIn 1.2s var(--transition-normal) both;
+        }
+
+        .team-card:nth-child(1) {
+            animation-delay: 0.4s;
+        }
+
+        .team-card:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        .team-card:nth-child(3) {
+            animation-delay: 0.8s;
+        }
+
+        /* Futuristic elements */
+        .glow-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            width: 100%;
+            max-width: 1200px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.5;
+        }
+
+        .glow-line-1 {
+            top: 0;
+            animation: glowPulse 4s infinite alternate;
+        }
+
+        .glow-line-2 {
+            bottom: 0;
+            animation: glowPulse 4s 2s infinite alternate;
         }
     </style>
 </head>
 <body>
     <div class="background">
-        <div class="grid"></div>
+        <div class="gradient-bg"></div>
+        <div class="grid-overlay"></div>
+        <div class="particles" id="particles"></div>
     </div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
 
-    <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url_for('home') }}">SNAP AI</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">SNAP AI</a>
+            <ul class="navbar-nav d-none d-md-flex flex-row">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('about_us') }}">About Us</a>
+                    <a class="nav-link" href="about_us.html">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('contact_us') }}">Contact Us</a>
+                    <a class="nav-link" href="contact_us.html">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('explore_tools') }}">Explore Other Tools</a>
+                    <a class="nav-link" href="explore_tools.html">Tools</a>
                 </li>
             </ul>
+            <button id="themeToggle" class="theme-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun-icon"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon-icon" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
         </div>
-    </div>
-</nav>
-
+    </nav>
 
     <section class="hero">
         <div class="container">
             <h1>Meet Our Team</h1>
-            <p>The brilliant minds behind SNAP AI</p>
+            <p>The brilliant minds behind SNAP AI's revolutionary technology</p>
         </div>
     </section>
 
-    <div class="container mb-5">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="team-card text-center">
-                    <img src="https://via.placeholder.com/150" alt="Team Member 1" class="team-member-img">
-                    <h3>John Doe</h3>
-                    <p>AI Research Lead</p>
-                    <p>John is an expert in machine learning and computer vision, leading our AI research initiatives.</p>
+    <section class="team-section">
+        <div class="glow-line glow-line-1"></div>
+        <div class="glow-line glow-line-2"></div>
+        
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <img src="/placeholder.svg?height=150&width=150" alt="Ayush Salunkhe" class="team-member-img">
+                        <h3 class="team-member-name">Ayush Salunkhe</h3>
+                        <p class="team-member-role">Full-Stack Developer</p>
+                        <p class="team-member-bio">Ayush is our talented full-stack developer with expertise in React and Python, bringing our AI solutions to life through elegant and efficient code.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team-card text-center">
-                    <img src="https://via.placeholder.com/150" alt="Team Member 2" class="team-member-img">
-                    <h3>Jane Smith</h3>
-                    <p>Full-Stack Developer</p>
-                    <p>Jane is our talented full-stack developer, bringing our AI solutions to life through elegant code.</p>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <img src="/placeholder.svg?height=150&width=150" alt="Sahil Rane" class="team-member-img">
+                        <h3 class="team-member-name">Sahil Rane</h3>
+                        <p class="team-member-role">UX/UI Designer</p>
+                        <p class="team-member-bio">Sahil is passionate about creating intuitive and beautiful user experiences, with a background in both design and psychology to make our AI tools accessible to everyone.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team-card text-center">
-                    <img src="https://via.placeholder.com/150" alt="Team Member 3" class="team-member-img">
-                    <h3>Mike Johnson</h3>
-                    <p>UX/UI Designer</p>
-                    <p>Mike is passionate about creating intuitive and beautiful user experiences for our AI tools.</p>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <img src="/placeholder.svg?height=150&width=150" alt="Sahil Kumar" class="team-member-img">
+                        <h3 class="team-member-name">Sahil Kumar</h3>
+                        <p class="team-member-role">Sub Developer</p>
+                        <p class="team-member-bio">Sahil is our skilled sub-developer, specializing in Python, HTML, and CSS, creating smooth and effective solutions for our projects. tools accessible to everyone.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Mouse parallax effect for orbs
-        document.addEventListener('mousemove', (e) => {
-            const orbs = document.querySelectorAll('.orb');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                
+                // Random size
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random animation delay
+                const delay = Math.random() * 10;
+                particle.style.animationDelay = `${delay}s`;
+                
+                // Random animation duration
+                const duration = Math.random() * 10 + 15;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        createParticles();
 
-            orbs.forEach((orb, index) => {
-                const speed = index === 0 ? 30 : -30;
-                orb.style.transform = `translate(${mouseX * speed}px, ${mouseY * speed}px)`;
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        
+        // Check for saved theme preference or use preferred color scheme
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme === 'light') {
+            document.body.classList.add('light');
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            const isLight = document.body.classList.contains('light');
+            
+            // Toggle icons
+            sunIcon.style.display = isLight ? 'none' : 'block';
+            moonIcon.style.display = isLight ? 'block' : 'none';
+            
+            // Save preference
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        // Add mouse movement effect to team cards
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.team-card');
+            const mouseX = (e.clientX / window.innerWidth) * 100;
+            const mouseY = (e.clientY / window.innerHeight) * 100;
+            
+            document.documentElement.style.setProperty('--mouse-x', `${mouseX}%`);
+            document.documentElement.style.setProperty('--mouse-y', `${mouseY}%`);
+            
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const cardX = e.clientX - rect.left;
+                const cardY = e.clientY - rect.top;
+                
+                if (cardX > 0 && cardX < rect.width && cardY > 0 && cardY < rect.height) {
+                    const rotateY = (cardX - rect.width/2) / 20;
+                    const rotateX = -(cardY - rect.height/2) / 20;
+                    
+                    card.style.transform = `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(10px) scale(1.02)`;
+                }
+            });
+        });
+        
+        document.addEventListener('mouseleave', () => {
+            const cards = document.querySelectorAll('.team-card');
+            cards.forEach(card => {
+                card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) translateZ(0) scale(1)';
             });
         });
     </script>
