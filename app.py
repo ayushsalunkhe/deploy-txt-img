@@ -420,8 +420,8 @@ def generate_with_sd(prompt):
             model=SD_MODEL,
             width=1024,  # Set explicit width
             height=1024,  # Set explicit height
-            negative_prompt="blurry, bad quality, incomplete, cropped",
-            guidance_scale=7.5,
+            negative_prompt="cartoon, illustration, drawing, painting, sketch, anime, stylized, oversaturated",
+            guidance_scale=6.0,
             num_inference_steps=30
         )
         
