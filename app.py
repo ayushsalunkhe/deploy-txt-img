@@ -417,7 +417,12 @@ def generate_with_sd(prompt):
         # Generate image
         image = hf_client.text_to_image(
             prompt,
-            model=SD_MODEL
+            model=SD_MODEL,
+            width=1024,  # Set explicit width
+            height=1024,  # Set explicit height
+            negative_prompt="blurry, bad quality, incomplete, cropped",
+            guidance_scale=7.5,
+            num_inference_steps=30
         )
         
         # Convert PIL Image to bytes
